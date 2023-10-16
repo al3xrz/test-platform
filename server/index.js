@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 
 app.delete('/log', (req, res) => {
-    fs.writeFile('./log.txt', JSON.stringify([]), e=> {
+    fs.writeFile('./data/log.txt', JSON.stringify([]), e=> {
         if(e) {
             console.log(e)
         } else {
@@ -28,11 +28,11 @@ app.delete('/log', (req, res) => {
 
 app.post('/log', (req, res) => {
     const message = req.body.message
-    fs.readFile('./log.txt', (err, data) => {
+    fs.readFile('./data/log.txt', (err, data) => {
         const info = JSON.parse(data)
         console.log(info)
         info.push({ id: uuid(), timestamp: Date.now(), message })
-        fs.writeFile('./log.txt', JSON.stringify(info), e => {
+        fs.writeFile('./data/log.txt', JSON.stringify(info), e => {
             if (e) {
                 console.log(e)
                 res.status(500).json({ message: "внутренняя ошибка" })
@@ -44,7 +44,7 @@ app.post('/log', (req, res) => {
 })
 
 app.get('/log', (req, res) => {
-    fs.readFile('./log.txt', (err, data) => {
+    fs.readFile('./data/log.txt', (err, data) => {
         res.status(200).json({ payload: JSON.parse(data) })
     })
 })
