@@ -3,6 +3,7 @@ const cors = require('cors')
 const fs = require('fs')
 const { uuid } = require('uuidv4')
 
+console.log('Server port : ', process.env.PORT)
 
 const app = express()
 app.use(cors())
@@ -51,6 +52,6 @@ app.get('/log', (req, res) => {
 
 
 
-app.listen(5000, () => {
+app.listen(process.env.PORT ?? 5000, () => {
     console.log('Server started!')
 })
